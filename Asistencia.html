@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Control de Asistencia</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f4f6f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  width: 350px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background: #0078D7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+#msg {
+  margin-top: 15px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Registro de Asistencia</h2>
+
+  <select id="usuario">
+    <option value="">Seleccionar usuario</option>
+    <option>Usuario 1</option>
+    <option>Usuario 2</option>
+  </select>
+
+  <select id="tipo">
+    <option>Ingreso</option>
+    <option>Salida ref.</option>
+    <option>Retorno ref.</option>
+    <option>Salida</option>
+    <option>Comisión</option>
+    <option>Permiso</option>
+  </select>
+
+  <button onclick="marcar()">Marcar Asistencia</button>
+
+  <p id="msg"></p>
+
+</div>
+
+<script>
+function marcar() {
+
+  var usuario = document.getElementById("usuario").value;
+  var tipo = document.getElementById("tipo").value;
+
+  if (usuario === "") {
+    alert("Selecciona un usuario");
+    return;
+  }
+
+  var url = "https://script.google.com/macros/s/AKfycbyplG_tJc_wgTs1b1Y0rFzAXvFhVhXisRKq76jEAct0JbpUVlHGS8BfVKNoCXLdj309sg/exec";
+
+  fetch(url, {
+    method: "POST",
+    mode: "no-cors",   // 🔥 necesario
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      usuario: usuario,
+      tipo: tipo
+    })
+  });
+
+  document.getElementById("msg").innerText = "✅ Enviado (revisar en hoja)";
+}
+</script>
+
+</body>
+</html>
